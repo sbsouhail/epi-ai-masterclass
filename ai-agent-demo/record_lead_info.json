@@ -1,0 +1,247 @@
+{
+  "name": "record_lead_info",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "full name"
+            },
+            {
+              "name": "company"
+            },
+            {
+              "name": "email"
+            },
+            {
+              "name": "sector"
+            },
+            {
+              "name": "project description"
+            }
+          ]
+        }
+      },
+      "id": "c055762a-8fe7-4141-a639-df2372f30060",
+      "typeVersion": 1.1,
+      "name": "When Executed by Another Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        272,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop through all input items\nreturn items.map(item => {\n  const data = item.json;\n\n  // 1. Define required fields\n  const requiredFields = ['full name','company', 'email', 'sector', 'project description'];\n  const missingFields = [];\n\n  // 2. Validate and Clean\n  const cleanData = {};\n  \n  requiredFields.forEach(field => {\n    const value = data[field];\n    \n    // Check if null, undefined, or just empty spaces\n    if (!value || (typeof value === 'string' && value.trim() === \"\")) {\n      missingFields.push(field);\n      cleanData[field] = \"N/A\"; // Fallback value\n    } else {\n      cleanData[field] = typeof value === 'string' ? value.trim() : value;\n    }\n  });\n\n  // 3. Add a validation flag\n  // This helps you use a Filter or If node later to decide if you should actually save it\n  cleanData.isValid = missingFields.length === 0;\n  cleanData.processedAt = new Date().toISOString();\n\n  return { json: cleanData };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        496,
+        160
+      ],
+      "id": "6bcb7d7c-6168-4e9d-86ad-05f32950db2e",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "738445c5-8eac-486f-b2d1-927e5bcf3c7a",
+              "leftValue": "={{ $json.isValid }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        720,
+        160
+      ],
+      "id": "25a8e0b5-f344-4cb7-9f8f-2d522d1f5a72",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1l44YxEhgMCRQEZ-uw5vTkMxI5Khqc8yuFOyq9bi-NrY",
+          "mode": "list",
+          "cachedResultName": "tuintek_leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1l44YxEhgMCRQEZ-uw5vTkMxI5Khqc8yuFOyq9bi-NrY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1l44YxEhgMCRQEZ-uw5vTkMxI5Khqc8yuFOyq9bi-NrY/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "full name": "={{ $json[\"full name\"] }}",
+            "company name": "={{ $json.company }}",
+            "email": "={{ $json.email }}",
+            "project description": "={{ $json[\"project description\"] }}",
+            "sector": "={{ $json.sector }}",
+            "date": "={{ $now }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "full name",
+              "displayName": "full name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "company name",
+              "displayName": "company name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "sector",
+              "displayName": "sector",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "project description",
+              "displayName": "project description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        944,
+        160
+      ],
+      "id": "12326b91-8d84-435b-92c9-c2bfbc94eaa2",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "7Zncm95nTo9sCyF2",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "full name": "Alice Thompson",
+          "company": "inov agency",
+          "email": "alice.t@innovatech.com",
+          "sector": "E-commerce",
+          "project description": "We are looking to integrate an AI-powered customer support agent into our React Native app to handle order tracking."
+        }
+      }
+    ]
+  },
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "e6e50f2c-1702-4376-997d-5870c67cb4f9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "34a8f08d227ca5fe91a8fb2c7105ae71007fa154d8a048fb9b3f3e39aea82840"
+  },
+  "id": "i2SdXPYbJGebfNbg",
+  "tags": []
+}
