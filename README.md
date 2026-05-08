@@ -6,9 +6,8 @@
 ![Focus](https://img.shields.io/badge/Focus-Token%20Economics%20%E2%86%92%20MCP%20Architecture-F59E0B)
 
 Official repository for the **"AI for Developers"** session at **EPI Digital School**.
-This blueprint is designed as an end-to-end technical infrastructure for modern AI
-engineering workflows, covering fundamentals and production integration patterns, from
-**Token Economics** to **MCP Architecture**.
+This blueprint covers the full spectrum of modern AI engineering workflows — from
+**Token Economics** fundamentals to **MCP Architecture** and production integration patterns.
 
 ---
 
@@ -22,62 +21,84 @@ The **EPI AI Blueprint** is a practical implementation guide for engineers who w
 - Integrate AI capabilities into real software products.
 
 This is not theory-only content. It is a delivery-focused, engineering-grade blueprint
-you can reuse.
+you can reuse in your own projects.
 
 ---
 
 ## Meet the Animators
 
-| Animator | Role | Profile |
-|---|---|---|
-| **Souhail SBOUI** | CTO & Co-founder at Tunitek | [LinkedIn](https://www.linkedin.com/in/sbsouhail/) |
-| **Yassine Benghanem** | AI & Engineering Animator | [LinkedIn](https://www.linkedin.com/in/yassine-benghanem/) |
-| **Ammar Ahmed** | AI & Product Animator | [LinkedIn](https://www.linkedin.com/in/ammar-ahmed-tn/) |
+| Animator              | Role                                        | Profile                                                    |
+| --------------------- | ------------------------------------------- | ---------------------------------------------------------- |
+| **Souhail SBOUI**     | CTO & Co-founder at Tunitek                 | [LinkedIn](https://www.linkedin.com/in/sbsouhail/)         |
+| **Yassine Benghanem** | Co-founder · Software Engineer · Automation | [LinkedIn](https://www.linkedin.com/in/yassine-benghanem/) |
+| **Ammar Ahmed**       | Mobile Developer · Software Engineer        | [LinkedIn](https://www.linkedin.com/in/ammar-ahmed-tn/)    |
 
-**Company:** Tunitek - [LinkedIn Company Page](https://www.linkedin.com/company/tuintekagency)
+**Company:** Tunitek — [LinkedIn](https://www.linkedin.com/company/tuintekagency)
 
 ---
 
 ## The Demo Project: `larashop-demo`
 
-`larashop-demo` is a Laravel-based e-commerce demo used as the live integration
-playground during the masterclass.
+`larashop-demo` is a Laravel-based e-commerce app used as the live integration
+playground during the masterclass. See [`larashop-demo/README.md`](./larashop-demo/README.md)
+for setup instructions, project structure, and the live demo prompts.
 
 ### What it demonstrates
 
-- **AI-powered inventory workflows**  
-  Automated synchronization and intelligent stock update strategies.
-- **Agentic product search**  
-  Natural-language product discovery with multi-step reasoning and retrieval.
-- **Production-minded integration**  
-  Clean architecture patterns for embedding AI into an existing backend stack.
-- **Developer-first implementation**  
-  Focus on maintainable code, workflow visibility, and extensible infrastructure.
+- **AI-powered inventory workflows** — automated sync and intelligent stock update strategies.
+- **Agentic product search** — natural-language product discovery with multi-step reasoning.
+- **Production-minded integration** — clean architecture patterns for embedding AI into a Laravel backend.
+- **Developer-first implementation** — maintainable code, workflow visibility, extensible infrastructure.
 
 ---
 
-## Helpful Resources (Student Toolbox)
+## Helpful Resources
+
+### Paid Plans (~$20/month)
 
 Recommended tools for your day-to-day AI development workflow.
-Pricing baseline referenced in class: **$20/month plans**.
 
-| Tool | Why It Matters | Plan |
-|---|---|---|
-| [Cursor](https://www.cursor.com/) | The AI-native IDE that understands your whole codebase and accelerates implementation workflows. | **$20/mo** |
-| [Claude.ai](https://claude.ai/) | Excellent for complex coding logic, architectural reasoning, and high-context engineering tasks. | **$20/mo** |
-| [ChatGPT](https://chatgpt.com/) | The versatile "Swiss Army Knife" for brainstorming, coding, debugging, and documentation. | **$20/mo (Plus)** |
-| [Perplexity](https://www.perplexity.ai/) | AI search engine for technical documentation, quick research, and source-backed exploration. | **$20/mo** |
+| Tool                                     | Why It Matters                                                                              | Plan              |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------- | ----------------- |
+| [Cursor](https://www.cursor.com/)        | AI-native IDE that understands your whole codebase — accelerates implementation workflows.  | **$20/mo**        |
+| [Claude.ai](https://claude.ai/)          | Best for complex coding logic, architectural reasoning, and high-context engineering tasks. | **$20/mo**        |
+| [ChatGPT](https://chatgpt.com/)          | Versatile Swiss Army knife for brainstorming, coding, debugging, and documentation.         | **$20/mo (Plus)** |
+| [Perplexity](https://www.perplexity.ai/) | AI search engine for technical docs, quick research, and source-backed exploration.         | **$20/mo**        |
+
+---
+
+### Zero-Budget Toolkit — Run AI Locally, Free Forever
+
+No subscription? Run open-source models on your own machine.
+
+#### Step 1 — Pick a Runner
+
+| Tool                                  | Platform                | Best For                                     |
+| ------------------------------------- | ----------------------- | -------------------------------------------- |
+| [Alpaca](https://jeffser.com/alpaca/) | macOS                   | Native app, zero config, great for beginners |
+| [Ollama](https://ollama.ai/)          | macOS · Linux · Windows | CLI + local API server, most flexible        |
+| [LM Studio](https://lmstudio.ai/)     | macOS · Windows         | GUI model browser + chat interface           |
+
+#### Step 2 — Pick a Model
+
+| Model                                                             | Best For                                  | RAM Needed | Ollama Command                 |
+| ----------------------------------------------------------------- | ----------------------------------------- | ---------- | ------------------------------ |
+| [Llama 3.1 8B](https://ollama.com/library/llama3.1)               | General coding · chat · reasoning         | ~6 GB      | `ollama run llama3.1`          |
+| [DeepSeek Coder V2](https://ollama.com/library/deepseek-coder-v2) | Code generation · debugging · refactoring | ~9 GB      | `ollama run deepseek-coder-v2` |
+| [Qwen2.5-Coder 7B](https://ollama.com/library/qwen2.5-coder)      | Code completion · code review             | ~5 GB      | `ollama run qwen2.5-coder`     |
+| [Mistral 7B](https://ollama.com/library/mistral)                  | Reasoning · summarization · Q&A           | ~5 GB      | `ollama run mistral`           |
+| [Phi-4 Mini](https://ollama.com/library/phi4-mini)                | Fast reasoning · low RAM machines         | ~3 GB      | `ollama run phi4-mini`         |
+| [Gemma 3 9B](https://ollama.com/library/gemma3)                   | Multilingual · instruction following      | ~6 GB      | `ollama run gemma3`            |
+
+> **Tip:** Start with `llama3.1` for general tasks or `qwen2.5-coder` for pure coding sessions.
+> All models above run fully offline — no API key, no cost.
 
 ---
 
 ## Engagement & Feedback
 
-### Feedback Loop
-
-Your feedback improves the next iteration of this blueprint.
-
 - **Feedback Form:** [AI for Developers — Event Feedback (EPI Digital School)](https://forms.gle/xrJBKHtjrrQTHb677)
-- **The Vibe Check Quiz:** [Insert Quiz/Interactive Link Here]
+- **Vibe Check Quiz:** [Insert Quiz Link Here]
 
 ---
 
@@ -86,7 +107,7 @@ Your feedback improves the next iteration of this blueprint.
 ```text
 epi-ai-blueprint/
 ├── presentation/      # Slides, session narrative, and visual architecture
-├── larashop-demo/     # Laravel demo: AI integration workflows in e-commerce
+├── larashop-demo/     # Laravel demo — AI integration workflows in e-commerce
 └── resources/         # Reference docs, links, templates, and supporting assets
 ```
 
@@ -102,11 +123,10 @@ epi-ai-blueprint/
 
 ## Call to Action
 
-If this blueprint helps you, please:
+If this blueprint helps you:
 
-- Star this repository to support the project.
+- Star this repository.
 - Share it with your engineering peers.
 - Follow the animators on LinkedIn for upcoming sessions and updates.
 
-Let's build AI-native software engineering workflows intentionally, architecturally,
-and at scale.
+Let's build AI-native software engineering workflows — intentionally, architecturally, and at scale.

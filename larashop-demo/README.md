@@ -1,15 +1,23 @@
 # LaraShop — EPI AI Masterclass Demo
 
-A modern tech shop/catalog application built with Laravel 13, Livewire 4, and Tailwind CSS v4. This project serves as the live demo for the **EPI AI Masterclass** — showcasing how AI coding tools like Claude Code can build, extend, and refactor a production-style Laravel application in real time.
+A modern tech shop/catalog application built with **Laravel 13**, **Livewire 4**, and **Tailwind CSS v4**.
+This project is the live demo for the **EPI AI Masterclass** — showcasing how AI coding tools like
+Claude Code and Cursor can build, extend, and refactor a production-style Laravel application in real time.
+
+---
 
 ## Tech Stack
 
-- **PHP** 8.5
-- **Laravel** 13
-- **Livewire** 4
-- **Tailwind CSS** v4
-- **SQLite** (zero-config database)
-- **Pest** v4 (testing)
+| Layer | Technology |
+|---|---|
+| Language | PHP 8.5 |
+| Framework | Laravel 13 |
+| Reactive UI | Livewire 4 |
+| Styling | Tailwind CSS v4 |
+| Database | SQLite (zero-config) |
+| Testing | Pest v4 |
+
+---
 
 ## Getting Started
 
@@ -38,15 +46,17 @@ Or use the all-in-one dev command (server + queue + logs + Vite):
 composer run dev
 ```
 
+---
+
 ## What's Inside
 
 ### Pages
 
 | Route | Description |
 |---|---|
-| `/` | Homepage — hero, category grid, featured products |
-| `/products` | Full catalog with live search, filter, sort (Livewire) |
-| `/products/{slug}` | Product detail with related products |
+| `/` | Homepage — hero section, category grid, featured products |
+| `/products` | Full catalog with live search, filter, and sort (Livewire) |
+| `/products/{slug}` | Product detail page with related products |
 
 ### Seeded Data
 
@@ -55,7 +65,7 @@ composer run dev
 
 ### Livewire `ProductGrid` Component
 
-The `app/Livewire/ProductGrid.php` component powers the catalog page with:
+Powers the catalog page (`app/Livewire/ProductGrid.php`) with:
 
 - Live search (300ms debounce)
 - Category filter
@@ -64,12 +74,16 @@ The `app/Livewire/ProductGrid.php` component powers the catalog page with:
 
 ### Future-Demo Placeholders
 
-The UI already contains non-functional placeholders that are intentionally ready to wire up during the live AI demo:
+The UI already contains non-functional placeholders — intentionally ready to wire up live:
 
-- **Search bar** in navbar → AI-powered search
-- **Dark mode toggle** → Alpine.js + Tailwind dark variant
-- **Bookmark heart** on product cards → Livewire favorites
-- **Add to Cart** button on product detail → cart system
+| Placeholder | Location | Feature to Build |
+|---|---|---|
+| Search bar | Navbar | AI-powered or live search |
+| Dark mode toggle | Navbar | Alpine.js + Tailwind dark variant |
+| Bookmark heart | Product cards | Livewire favorites |
+| Add to Cart button | Product detail page | Session-based cart |
+
+---
 
 ## Project Structure
 
@@ -108,6 +122,8 @@ resources/views/
     └── show.blade.php
 ```
 
+---
+
 ## Running Tests
 
 ```bash
@@ -116,9 +132,125 @@ php artisan test
 
 ---
 
+## Live Demo Prompts
+
+Copy-paste these prompts directly into **Claude Code** or **Cursor** to build each feature live during the demo.
+Each prompt assumes the existing codebase structure — no extra context needed.
+
+---
+
+### Category Filters
+
+```
+Wire up the category filter in the ProductGrid Livewire component.
+The filter buttons already exist in the products page UI.
+Connect them so clicking a category sets an active $category property
+and filters the Eloquent query accordingly.
+Add an "All" option that clears the filter and shows all products.
+Highlight the active filter button visually.
+```
+
+---
+
+### Navbar Search Bar
+
+```
+Implement the search bar that already exists in the main navbar
+(resources/views/components/layouts/app.blade.php).
+Build it as a Livewire component that shows a real-time dropdown of matching products
+as the user types, with a 300ms debounce.
+Each result should show the product name, category, and price, and link to the product detail page.
+Show a "No results found" state when nothing matches.
+Close the dropdown when clicking outside.
+```
+
+---
+
+### Dark Mode
+
+```
+Add dark mode to the application using Alpine.js and Tailwind's dark: variant.
+Wire up the dark mode toggle button already in the navbar.
+Persist the user's preference in localStorage so it survives page refreshes.
+Apply dark: utility classes to:
+- the main layout background and text
+- the navbar
+- product cards
+- the hero section
+- form inputs and filter controls
+Swap the toggle button icon between sun and moon based on the current mode.
+```
+
+---
+
+### Bookmarks / Favorites
+
+```
+Build a bookmarks/favorites feature.
+The heart icon already exists on product cards
+(resources/views/components/product-card.blade.php).
+Wire it up as a Livewire toggle action:
+- clicking the heart saves or removes the product from a favorites list stored in the session
+- the heart icon fills/unfills to reflect current state
+- add a favorites count badge to the navbar icon
+Create a /favorites page that lists all saved products using the existing product-card component.
+Show an empty state with a call-to-action when no favorites exist.
+```
+
+---
+
+### Add to Cart
+
+```
+Implement a shopping cart system.
+The "Add to Cart" button already exists on the product detail page
+(resources/views/products/show.blade.php).
+Build a Cart service or Livewire component that stores cart items
+(product_id + quantity) in the session.
+Show a cart item count badge in the navbar.
+Create a /cart page with:
+- list of cart items with product image, name, price, and quantity
+- quantity increment/decrement controls
+- remove item button
+- order subtotal
+- a "Continue Shopping" link back to /products
+```
+
+---
+
+### AI-Powered Natural Language Search
+
+```
+Add AI-powered natural language search to the products page.
+Create a new Livewire component AiSearch with a text input at the top of the catalog.
+When the user submits a query like "something good for gaming under 500 dollars",
+send it to the Anthropic API using the claude-haiku-4-5 model.
+Ask the model to extract structured search criteria: category, max_price, keywords.
+Use those criteria to filter the products Eloquent query.
+Show a summary of what the AI understood from the query (e.g. "Showing Gaming products under $500").
+Gracefully fall back to showing all products if the API call fails.
+```
+
+---
+
+### Product Sorting
+
+```
+Add a sort dropdown to the ProductGrid Livewire component
+(resources/views/livewire/product-grid.blade.php).
+Options: Newest, Price Low→High, Price High→Low, Top Rated.
+Wire it to a $sort Livewire property and update the Eloquent query's orderBy clause accordingly.
+Persist the selected sort option visually in the dropdown.
+Reset to page 1 when the sort option changes.
+```
+
+---
+
 ## The Prompt That Generated This Project
 
-> This project was scaffolded in a single Claude Code session using the prompt below. It demonstrates how AI tools can generate a complete, production-style Laravel application from a detailed specification.
+> This project was scaffolded in a single Claude Code session using the prompt below.
+> It demonstrates how AI tools can generate a complete, production-style Laravel application
+> from a detailed specification.
 
 ```
 Create a modern Laravel 13 web application for a university AI presentation demo.
