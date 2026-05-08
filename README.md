@@ -30,7 +30,7 @@ you can reuse in your own projects.
 | Animator              | Role                                        | Profile                                                    |
 | --------------------- | ------------------------------------------- | ---------------------------------------------------------- |
 | **Souhail SBOUI**     | CTO & Co-founder at Tunitek                 | [LinkedIn](https://www.linkedin.com/in/sbsouhail/)         |
-| **Yassine Benghanem** | Co-founder · Software Engineer · Automation | [LinkedIn](https://www.linkedin.com/in/yassine-benghanem/) |
+| **Yassine BEN GHANEM** | CEO & Co-founder at Tunitek                 | [LinkedIn](https://www.linkedin.com/in/yassine-benghanem/) |
 | **Ammar Ahmed**       | Mobile Developer · Software Engineer        | [LinkedIn](https://www.linkedin.com/in/ammar-ahmed-tn/)    |
 
 **Company:** Tunitek — [LinkedIn](https://www.linkedin.com/company/tuintekagency)
@@ -49,6 +49,40 @@ for setup instructions, project structure, and the live demo prompts.
 - **Agentic product search** — natural-language product discovery with multi-step reasoning.
 - **Production-minded integration** — clean architecture patterns for embedding AI into a Laravel backend.
 - **Developer-first implementation** — maintainable code, workflow visibility, extensible infrastructure.
+
+---
+
+## AI Agent Demo: `ai-agent-demo`
+
+`ai-agent-demo` contains an n8n conversational sales agent for Tuintek that combines
+Q&A with structured lead capture.
+
+### What is inside
+
+- `Tuintek AI Sales & Info Agent.json`: Main LangChain-style n8n chat agent workflow.
+- `get_tuintek_info.json`: Tool workflow returning structured company/founder/service data.
+- `record_lead_info.json`: Tool workflow validating and storing leads in Google Sheets.
+
+### Architecture analysis
+
+- **Entry point:** A chat trigger receives user messages, then routes to an AI Agent node.
+- **LLM + memory:** The agent uses Google Gemini chat with a buffer memory window (`contextWindowLength: 20`) for multi-turn continuity.
+- **Tool orchestration:** The agent can call two workflows as tools:
+  - `get_tuintek_info` for factual company/service responses.
+  - `record_lead_info` for CRM-style lead capture.
+- **Lead qualification flow:** System instructions enforce collecting five fields before saving:
+  - Full name
+  - Company
+  - Sector
+  - Email
+  - Project description
+- **Data quality gate:** `record_lead_info` trims/validates required fields, adds `isValid` + `processedAt`, then appends valid entries to a Google Sheet.
+
+### Why this demo matters
+
+- Demonstrates practical agentic design with explicit business goals (answer + qualify + capture).
+- Shows how to separate agent reasoning from operational tools/workflows.
+- Provides a production-like pattern for integrating conversational AI with structured backend storage.
 
 ---
 
@@ -108,6 +142,7 @@ No subscription? Run open-source models on your own machine.
 epi-ai-blueprint/
 ├── presentation/      # Slides, session narrative, and visual architecture
 ├── larashop-demo/     # Laravel demo — AI integration workflows in e-commerce
+├── ai-agent-demo/     # n8n sales/info agent with tool-based lead capture
 └── resources/         # Reference docs, links, templates, and supporting assets
 ```
 
@@ -117,7 +152,8 @@ epi-ai-blueprint/
 
 1. Start with `presentation/` to understand the architecture and session flow.
 2. Explore `larashop-demo/` to see AI integration patterns in production-like code.
-3. Use `resources/` to deepen implementation, tooling, and deployment practices.
+3. Review `ai-agent-demo/` to learn conversational-agent orchestration and lead data pipelines in n8n.
+4. Use `resources/` to deepen implementation, tooling, and deployment practices.
 
 ---
 
