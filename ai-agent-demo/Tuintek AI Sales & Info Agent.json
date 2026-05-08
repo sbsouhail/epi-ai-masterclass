@@ -1,0 +1,316 @@
+{
+  "name": "Tuintek AI Sales & Info Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -496,
+        -208
+      ],
+      "id": "b2692a1f-76ed-4d90-869e-8d17e80f626e",
+      "name": "When chat message received",
+      "webhookId": "2058b083-25d5-4a8a-8177-6aa451e51e94"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "af86fe09-3a1d-440b-acea-ffa6c3712561",
+              "leftValue": "={{ $json.action }}",
+              "rightValue": "sendMessage",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -272,
+        -208
+      ],
+      "id": "7df18661-b4f9-497c-9c54-b549f5c70356",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "## ROLE\nYou are the Tuintek AI Sales & Info Agent. You represent Tuintek, a technology agency specializing in AI automation, agentic workflows, mobile apps (React Native), and scalable backends (NestJS).\n\n## LANGUAGE & STYLE\n- LANGUAGE: Respond in the same language as the user (English, French, or Tunisian Arabic/Darija).\n- STYLE: Professional, technical, and efficient. Use \"we\" to represent the Tuintek team.\n- TONE: In Tunisian Darija, be helpful and professional (e.g., \"Ahla bik\", \"Tfadel\", \"N-3awnoujek\").\n\n## INTERACTION RULES\n1. STRICT: Ask only ONE question per message.\n2. Keep responses brief (max 2-3 sentences) to maintain a natural conversation flow.\n3. Answer the user's technical or company-specific questions first using your knowledge base.\n\n## LEAD CAPTURE GOAL\nYour primary objective is to capture lead data for the sales team. You must gather these 5 specific pieces of information before triggering the 'record_lead_info' tool:\n1. Full Name: First and last name.\n2. Company: The name of the user's business or project.\n3. Sector: The industry they operate in (e.g., E-commerce, Sports, Finance).\n4. Email: A valid professional email address.\n5. Project Description: A brief summary of their needs or what they want to build.\n\n## CONVERSATION STRATEGY\n- After answering an initial query, transition to data collection: \"Enchanté! Who am I speaking with and what is your company name?\"\n- Follow up by asking for their industry/sector.\n- Then ask for their professional email.\n- Finally, ask: \"Could you briefly describe the main challenge you're looking to solve or your project goal?\"\n- CRITICAL: Immediately execute the 'record_lead_info' tool once you have all 5 values.\n\n## TOOLS\n- get_tuintek_info: Access company details, founders (Yassine Ben Ghanem & Souhail Sboui), and service info.\n- record_lead_info: Execute this ONLY when you have full name, company, sector, email, and project description."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        80,
+        -208
+      ],
+      "id": "d126d133-636c-4b24-9a89-4599908cab41",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -48,
+        16
+      ],
+      "id": "16a6b096-884f-4dd1-8939-b0a087fe99df",
+      "name": "Gemini Chat",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "dIzf8axwMbt01018",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        64,
+        16
+      ],
+      "id": "2a7fee36-1cb1-4bf9-9689-82ab43364ddc",
+      "name": "Memory"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "HiitcAnlz4qsXziN",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/HiitcAnlz4qsXziN",
+          "cachedResultName": "get_tuintek_info"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        192,
+        16
+      ],
+      "id": "835dfc9e-7fa5-49d1-85f5-1695f77530af",
+      "name": "get_tuintek_info"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        544,
+        -208
+      ],
+      "id": "479650bc-abf2-4438-b47b-10b4a68b61c6",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "i2SdXPYbJGebfNbg",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/i2SdXPYbJGebfNbg",
+          "cachedResultName": "record_lead_info"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "full name": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('full_name', ``, 'string') }}",
+            "email": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('email', ``, 'string') }}",
+            "sector": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('sector', ``, 'string') }}",
+            "project description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('project_description', ``, 'string') }}",
+            "company": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('company', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "full name",
+              "displayName": "full name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "company",
+              "displayName": "company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "sector",
+              "displayName": "sector",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "project description",
+              "displayName": "project description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        336,
+        16
+      ],
+      "id": "4d2a51aa-605f-47b6-aef8-fdf2e96e9602",
+      "name": "record_lead_info"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Chat": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_tuintek_info": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "record_lead_info": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "6c62cbef-544a-4411-8c53-282c20ce3904",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "34a8f08d227ca5fe91a8fb2c7105ae71007fa154d8a048fb9b3f3e39aea82840"
+  },
+  "id": "7CAYlxLnlllgL6d2",
+  "tags": []
+}

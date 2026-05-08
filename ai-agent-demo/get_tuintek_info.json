@@ -1,0 +1,56 @@
+{
+  "name": "get_tuintek_info",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "id": "c055762a-8fe7-4141-a639-df2372f30060",
+      "typeVersion": 1.1,
+      "name": "When Executed by Another Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        272,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// n8n Code Node: Tuintek Info\nconst tuintekData = {\n  company: {\n    name: \"Tuintek\",\n    tagline: \"Engineering the Future of Business with AI & Scalable Tech\",\n    location: \"Cyber Parc Hammam Sousse, Sousse, Tunisia\",\n    website: \"https://tuintek.com\",\n    focus: [\n      \"AI Automation & Agentic Workflows\",\n      \"Mobile App Development (React Native)\",\n      \"Scalable Backends (NestJS, PostgreSQL, GraphQL)\",\n      \"Digital Transformation for MENA startups\"\n    ]\n  },\n  founders: [\n    {\n      name: \"Yassine Ben Ghanem\",\n      role: \"CEO & Founder\",\n      expertise: \"Senior Full-Stack Engineer, AI Automation Specialist\",\n      bio: \"An expert in building high-performance architectures and transitioning businesses into AI-driven workflows.\"\n    },\n    {\n      name: \"Souhail Sboui\",\n      role: \"Technical Lead & Co-founder\",\n      expertise: \"DevOps, Backend Architecture, Cloud Infrastructure\"\n    }\n  ],\n  key_projects: [\n    {\n      name: \"Shoot\",\n      description: \"A digital platform for amateur sports management, featuring B2B dashboards and B2C mobile apps.\"\n    },\n    {\n      name: \"TuinSign\",\n      description: \"An e-signature solution tailored for the Tunisian market.\"\n    }\n  ],\n  contact_process: \"For custom quotes, we require a project description and contact details to provide a formal estimate within 24-48 hours.\"\n};\n\nreturn {\n  json: tuintekData\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        480,
+        352
+      ],
+      "id": "58847c26-e1b8-4011-aa4f-eccf9ca2cc7b",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "e1f8f408-3871-48ad-aeb1-1a6b9059e53c",
+  "meta": {
+    "instanceId": "34a8f08d227ca5fe91a8fb2c7105ae71007fa154d8a048fb9b3f3e39aea82840"
+  },
+  "id": "HiitcAnlz4qsXziN",
+  "tags": []
+}
