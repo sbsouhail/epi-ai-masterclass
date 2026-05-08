@@ -1,0 +1,41 @@
+services:
+  init-permissions:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      args:
+        APP_ENV: ${APP_ENV:-production}
+    user: "root"
+    command: >
+      sh -lc "mkdir -p /app/database/data /app/storage/logs /app/storage/app /app/storage/app/public
+      && chown -R appuser:appuser /app/database/data /app/storage/logs /app/storage/app
+      && ln -sfn /app/storage/app/public /app/public/storage"
+    volumes:
+      - database_data:/app/database/data
+      - storage_logs_data:/app/storage/logs
+      - storage_app_data:/app/storage/app
+
+  app:
+    restart: unless-stopped
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      args:
+        APP_ENV: ${APP_ENV:-production}
+        # SERVER_NAME: ${SERVER_NAME:-:80}
+    user: "appuser"
+    depends_on:
+      init-permissions:
+        condition: service_completed_successfully
+    networks:
+      - web
+    volumes:
+      - database_data:/app/database/data
+      - storage_logs_data:/app/storage/logs
+      - storage_app_data:/app/storage/app
+networks:
+  web:
+volumes:
+  database_data:
+  storage_logs_data:
+  storage_app_data:
